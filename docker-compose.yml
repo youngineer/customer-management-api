@@ -1,0 +1,24 @@
+services:
+  postgres-db:
+    image: postgres:13  # The desired version of the PostgreSQL image
+    container_name: pg-db-springboot01  # Name of the container
+    environment:
+      POSTGRES_DB: defaultdb            # Name of the database to be created
+      POSTGRES_USER:           # Username for PostgreSQL
+      POSTGRES_PASSWORD:   # Replace with the actual password
+      PGDATA: /var/lib/postgresql/data/pgdata  # Directory to store data within the container
+    ports:
+      - "12012:5432"  # Expose port 12012 on the host and map to 5432 inside the container
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata  # Named volume for persistent data storage
+    networks:
+      - db  # Custom network for isolation
+    restart: unless-stopped  # Restart policy for the container
+
+volumes:
+  db:  # Define a named volume
+
+networks:
+  db:
+    driver: bridge  # Use the bridge driver for the custom network
+
